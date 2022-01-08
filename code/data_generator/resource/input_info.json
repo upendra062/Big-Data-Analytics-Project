@@ -1,0 +1,118 @@
+{
+	"data_info": [{
+			"var_name": "user_id",
+			"var_type": "int",
+			"var_constraint": {
+				"start_range": 100,
+				"incremental_by": 1,
+				"end_range": 50000,
+				"default": []
+			}
+		},
+		{
+			"var_name": "video_id",
+			"var_type": "int",
+			"var_constraint": {
+				"start_range": 100,
+				"incremental_by": 1,
+				"end_range": 50000,
+				"default": []
+			}
+		},
+		{
+			"var_name": "creator_id",
+			"var_type": "int",
+			"var_constraint": {
+				"start_range": 100,
+				"incremental_by": 1,
+				"end_range": 50000,
+				"default": []
+			}
+		},
+		{
+			"var_name": "geo_cd",
+			"var_type": "str",
+			"var_constraint": {
+				"prefix": "",
+				"suffix": "",
+				"min_len": 2,
+				"max_len": 2,
+				"allow_null": true,
+				"default": ["AA", "AP", "JP","EU","AU"]
+			}
+		},
+		{
+			"var_name": "channel_id",
+			"var_type": "int",
+			"var_constraint": {
+				"start_range": 10,
+				"incremental_by": 1,
+				"end_range": 6000,
+				"default": []
+			}
+		},
+		{
+			"var_name": "video_end_type",
+			"var_type": "str",
+			"var_constraint": {
+				"prefix": "",
+				"suffix": "",
+				"min_len": 1,
+				"max_len": 1,
+				"allow_null": true,
+				"default": ["0", "1", "2","3"]
+			}
+		},
+		{
+			"var_name": "minutes_played",
+			"var_type": "int",
+			"var_constraint": {
+				"start_range": 2,
+				"incremental_by": 1,
+				"end_range": 400,
+				"default": []
+			}
+		},
+		{
+			"var_name": "timestamp",
+			"var_type": "date",
+			"var_constraint": {
+				"start_date": "11/01/2017",
+				"end_date": "11/10/2019",
+				"date_format": "%d/%m/%Y",
+				"default": []
+			}
+		},
+		{
+			"var_name": "liked",
+			"var_type": "bool",
+			"var_constraint": {
+				"default": [true]
+			}
+		},
+			{
+			"var_name": "disliked",
+			"var_type": "bool",
+			"var_constraint": {
+				"default": [true]
+			}
+		},
+		{
+			"var_name": "timestamp",
+			"var_type": "datetime",
+			"var_constraint": {
+				"start_date_time": "11/01/2019 00:00:00",
+				"end_date_time": "11/03/2020 00:00:00",
+				"date_time_format": "%d/%m/%Y %H:%M:%S",
+				"default": []
+			}
+		}
+
+	],
+	"meta_info": {
+		"no_of_rows": 9999,
+		"destination_folder_path": "generate_data",
+		"output_file_name":"data_gen",
+		"format_of_gen_file": ["xml","csv"]
+	}
+}

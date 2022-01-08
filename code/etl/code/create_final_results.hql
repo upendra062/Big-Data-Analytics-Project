@@ -1,0 +1,51 @@
+
+use video_analytics;						
+CREATE TABLE IF NOT EXISTS top_channels
+(
+chnnel_id STRING,
+total_distinct_videos_played INT,
+distinct_user_count INT
+)
+PARTITIONED BY (batchid INT)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+CREATE TABLE IF NOT EXISTS users_behaviour
+(
+user_type STRING,
+duration INT
+)
+PARTITIONED BY (batchid INT)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+CREATE TABLE IF NOT EXISTS connected_creators
+(
+cretor_id STRING,
+user_count INT
+)
+PARTITIONED BY (batchid INT)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+CREATE TABLE IF NOT EXISTS top_royalty_videos
+(
+video_id STRING,
+duration INT
+)
+PARTITIONED BY (batchid INT)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+CREATE TABLE IF NOT EXISTS top_unsubscribed_users
+(
+user_id STRING,
+duration INT
+)
+PARTITIONED BY (batchid INT)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;

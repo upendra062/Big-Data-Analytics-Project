@@ -1,0 +1,64 @@
+spark.sql("show tables")
+
+spark.sql("show tables").show()
+
+spark.sql("show databases").show()
+
+create database in spark
+----------------------
+spark.sql("create database video_analytics").show()
+spark.sql("USE upendra_analytics")
+create table in spark
+-----------------------
+
+ 
+spark.sql("CREATE TABLE IF NOT EXISTS Upendra_analytics.Merged_data_all(liked STRING,user_id STRING,video_end_type INT,minutes_played INT,video_id STRING,geo_cd STRING,channel_id STRING,creator_id STRING ,timestamp_col STRING ,disliked STRING) PARTITIONED BY (batchid STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','")
+
+spark.sql("CREATE TABLE IF NOT EXISTS Upendra_analytics.enriched_data(liked STRING,user_id STRING,video_end_type INT,minutes_played INT,video_id STRING,geo_cd STRING,channel_id STRING,creator_id STRING ,timestamp_col STRING ,disliked STRING,batchid INT, status STRING)STORED AS PARQUET").show()
+spark.sql("CREATE TABLE IF NOT EXISTS Upendra_analytics.hero_data(liked STRING,user_id STRING,video_end_type INT,minutes_played INT,video_id STRING,geo_cd STRING,channel_id STRING,creator_id STRING ,timestamp_col STRING ,disliked STRING,batchid INT, status STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ','").show()
+
+
+df = spark.read.format("csv").option("header", "trspaue").load("/tmp/data_gen.csv")
+
+from pyspark.sql.functions import lit
+dftoWrite = df.withColumn("batchid",lit("2021123003"))
+
+
+dftoWrite.write.insertInto("upendra_analytics.hero_data")
+
+
+dftoWrite.write.insertInto("upendra_analytics.enriched_data")
+pyspark --driver-memory 512M --executor-memory 512M --executor-cores 1 --num-executors 1 --conf spark.sql.catalogImplementation=hive
+
+
+
+
+
+
+
+
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+spark.sql("""INSERT OVERWRITE TABLE video_analytics.enriched_data
+	SELECT 
+	IF (i.liked IS NULL, 0, i.liked) AS liked,i.user_id ,IF (i.video_end_type IS NULL, 3, i.video_end_type) AS video_end_type ,i.minutes_played,i.video_id,sg.geo_cd ,i.channel_id ,sa.creator_id  ,i.timestamp  ,i.disliked,
+	IF((i.liked="true" AND i.disliked="true") 
+	OR i.user_id IS NULL 
+	OR i.video_id IS NULL
+	OR i.timestamp IS NULL
+	OR i.geo_cd IS NULL
+	OR i.user_id='' 
+	OR i.video_id='' 
+	OR i.timestamp='' 
+	OR i.geo_cd=''
+	OR sg.geo_cd IS NULL
+	OR sg.geo_cd=''
+	OR sa.creator_id IS NULL
+	OR sa.creator_id='', 'fail', 'pass') AS status
+	FROM video_analytics.Merged_data_all i LEFT OUTER JOIN video_analytics.channel_geo_map sg ON i.channel_id = sg.channel_id
+	LEFT OUTER JOIN video_analytics.video_creator_map sa ON i.video_id = sa.video_id""")
+
+
+
+
+

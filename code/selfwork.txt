@@ -1,0 +1,9 @@
+sudo service ambari-server restart
+
+sh populate-hbase-lookup-tables.sh
+
+ps -ef | grep 'hbase'
+
+
+kill -9 (portnumber)
+
